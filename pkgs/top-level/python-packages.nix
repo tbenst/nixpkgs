@@ -3718,6 +3718,8 @@ in {
 
   psycopg2 = callPackage ../development/python-modules/psycopg2 {};
 
+  psychopy = callPackage ../development/python-modules/psychopy {};
+
   ptpython = callPackage ../development/python-modules/ptpython {
     prompt_toolkit = self.prompt_toolkit;
   };
@@ -3834,6 +3836,8 @@ in {
     # a few decimal places, so caveat emptor.
     proj = null;
   };
+
+  pyparallel = callPackage ../development/python-modules/pyparallel { };
 
   pyqrcode = callPackage ../development/python-modules/pyqrcode { };
 
