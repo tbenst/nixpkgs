@@ -1943,6 +1943,16 @@ in {
 
   curtsies = callPackage ../development/python-modules/curtsies { };
 
+  deeplabcut =
+    if stdenv.isDarwin
+    then callPackage ../development/python-modules/deeplabcut { }
+    else callPackage ../development/python-modules/deeplabcut rec {
+      cudaSupport = pkgs.config.cudaSupport or false;
+      inherit (pkgs.linuxPackages) nvidia_x11;
+      cudatoolkit = pkgs.cudatoolkit_10_0;
+      cudnn = pkgs.cudnn_cudatoolkit_10_0;
+    };
+
   envs = callPackage ../development/python-modules/envs { };
 
   eth-hash = callPackage ../development/python-modules/eth-hash { };
