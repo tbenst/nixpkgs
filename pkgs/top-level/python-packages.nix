@@ -2309,6 +2309,8 @@ in {
 
   curtsies = callPackage ../development/python-modules/curtsies { };
 
+  deeplabcut = callPackage ../development/python-modules/deeplabcut { };
+
   envs = callPackage ../development/python-modules/envs { };
 
   etelemetry = callPackage ../development/python-modules/etelemetry { };
