@@ -1,17 +1,18 @@
-{ stdenv, fetchFromGitHub, rustPlatform, clang, llvmPackages, rustfmt, writeScriptBin }:
+{ stdenv, fetchFromGitHub, rustPlatform, clang, llvmPackages, rustfmt, writeScriptBin,
+  runtimeShell }:
 
 rustPlatform.buildRustPackage rec {
-  name = "rust-bindgen-${version}";
-  version = "0.42.2";
+  pname = "rust-bindgen";
+  version = "0.49.0";
 
   src = fetchFromGitHub {
-    owner = "rust-lang-nursery";
-    repo = "rust-bindgen";
+    owner = "rust-lang";
+    repo = pname;
     rev = "v${version}";
-    sha256 = "10h0h7x8yf4dsyw2p2nas2jg5p3i29np0y3rfzrdq898d70gvq4j";
+    sha256 = "0i1lh8z0jpf8gcfqxig8kl6wzjrkwb3jkad5ghb6ppkdkpr94jq4";
   };
 
-  cargoSha256 = "01jvi86xgz0r7ia9agnfpms6b6x68lzwj6f085m0w659i94acgpi";
+  cargoSha256 = "0v3slbah0s1w75s38x1akvshcxsi1s810yybd9faday7biwmdbmj";
 
   libclang = llvmPackages.libclang.lib; #for substituteAll
 
@@ -29,10 +30,10 @@ rustPlatform.buildRustPackage rec {
     chmod +x $out/bin/bindgen
   '';
 
-  doCheck = false; # half the tests fail because our rustfmt is not nightly enough
+  doCheck = true;
   checkInputs =
     let fakeRustup = writeScriptBin "rustup" ''
-      #!${stdenv.shell}
+      #!${runtimeShell}
       shift
       shift
       exec "$@"
@@ -42,6 +43,10 @@ rustPlatform.buildRustPackage rec {
     fakeRustup # the test suite insists in calling `rustup run nightly rustfmt`
     clang
   ];
+  preCheck = ''
+    # for the ci folder, notably
+    patchShebangs .
+  '';
 
   meta = with stdenv.lib; {
     description = "C and C++ binding generator";
@@ -51,7 +56,7 @@ rustPlatform.buildRustPackage rec {
       As with most compiler related software, this will only work
       inside a nix-shell with the required libraries as buildInputs.
     '';
-    homepage = https://github.com/rust-lang-nursery/rust-bindgen;
+    homepage = https://github.com/rust-lang/rust-bindgen;
     license = with licenses; [ bsd3 ];
     maintainers = [ maintainers.ralith ];
   };

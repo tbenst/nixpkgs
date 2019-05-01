@@ -8,24 +8,17 @@ let
     inherit (gnome2) GConf gnome_vfs;
   };
   stableVersion = {
-    version = "3.2.1.0"; # "Android Studio 3.2.1"
-    build = "181.5056338";
-    sha256Hash = "117skqjax1xz9plarhdnrw2rwprjpybdc7mx7wggxapyy920vv5r";
+    version = "3.4.0.18"; # "Android Studio 3.4.0"
+    build = "183.5452501";
+    sha256Hash = "0i8wz9v6nxzr27a07cv2330i84v94pcl13gjwvpglp55hyzd8axd";
   };
-  betaVersion = {
-    version = "3.3.0.16"; # "Android Studio 3.3 Beta 4"
-    build = "182.5114240";
-    sha256Hash = "12gzwnlvc1w5lywpdckdgwxy2yrhf0m0fvaljdsis2arw0x9qdh2";
-  };
+  betaVersion = stableVersion;
   latestVersion = { # canary & dev
-    version = "3.4.0.2"; # "Android Studio 3.4 Canary 3"
-    build = "183.5112304";
-    sha256Hash = "0dzk4ag1dirfq8l2q91j6hsfyi07wx52qcsmbjb9a2710rlwpdhp";
+    version = "3.5.0.12"; # "Android Studio 3.5 Canary 13"
+    build = "191.5487692";
+    sha256Hash = "0iwd2qa551rs9b0w4rs7wmzdbh3r4j76xvs815l6i5pilk0s47gz";
   };
 in rec {
-  # Old alias
-  preview = beta;
-
   # Attributes are named by their corresponding release channels
 
   stable = mkStudio (stableVersion // {
@@ -35,7 +28,7 @@ in rec {
 
   beta = mkStudio (betaVersion // {
     channel = "beta";
-    pname = "android-studio-preview";
+    pname = "android-studio-beta";
   });
 
   dev = mkStudio (latestVersion // {

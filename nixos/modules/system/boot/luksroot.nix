@@ -87,6 +87,9 @@ let
     mkdir -p /crypt-ramfs
     mount -t ramfs none /crypt-ramfs
 
+    # Cryptsetup locking directory
+    mkdir -p /run/cryptsetup
+
     # For Yubikey salt storage
     mkdir -p /crypt-storage
 
@@ -144,7 +147,7 @@ let
                     fi
                 fi
             done
-            echo -n "Verifiying passphrase for ${device}..."
+            echo -n "Verifying passphrase for ${device}..."
             echo -n "$passphrase" | ${csopen} --key-file=-
             if [ $? == 0 ]; then
                 echo " - success"

@@ -2,22 +2,24 @@
 , liburcu, zlib, libaio, zstd, lz4 }:
 
 stdenv.mkDerivation rec {
-  name = "bcachefs-tools-unstable-2018-10-12";
+  pname = "bcachefs-tools";
+  version = "2019-04-04";
 
   src = fetchgit {
     url = "https://evilpiepirate.org/git/bcachefs-tools.git";
-    rev = "55fbb25501330038e1714905b9ddeb25d875c11c";
-    sha256 = "0cwzbyf133jc0fkc8nmjcvv3wmglqhyxda1hh10hgxrbq5vm39wx";
+    rev = "d13bbb2955f899f10be4ab315ad229d2951fdcda";
+    sha256 = "0cjy12qjd572sbg8h4i18fn001p6a6ahc4ljwids58nv83q99ll3";
   };
 
   enableParallelBuilding = true;
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ attr libuuid libscrypt libsodium keyutils liburcu zlib libaio zstd lz4 ];
-  installFlags = [ "PREFIX=$(out)" ];
-  
+  installFlags = [ "PREFIX=${placeholder "out"}" ];
+
   preInstall = ''
-    sed -i \
-      "s,INITRAMFS_DIR=/etc/initramfs-tools,INITRAMFS_DIR=$out/etc/initramfs-tools,g" Makefile
+    substituteInPlace Makefile \
+      --replace "INITRAMFS_DIR=/etc/initramfs-tools" \
+                "INITRAMFS_DIR=${placeholder "out"}/etc/initramfs-tools"
   '';
 
   meta = with stdenv.lib; {

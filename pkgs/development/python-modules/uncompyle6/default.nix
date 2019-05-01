@@ -11,11 +11,11 @@
 
 buildPythonPackage rec {
   pname = "uncompyle6";
-  version = "3.2.4";
+  version = "3.2.6";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "0lv0ks7w5bsl8bndm6ikl4yprkq2ps23y409ldlycrvlggjg44y5";
+    sha256 = "3a40f4f4b8b02a8687bd98c598980bed38a4770e3de253847eafed4b7167d07f";
   };
 
   checkInputs = [ nose pytest hypothesis six ];
@@ -30,7 +30,7 @@ buildPythonPackage rec {
   meta = with stdenv.lib; {
     description = "Python cross-version byte-code deparser";
     homepage = https://github.com/rocky/python-uncompyle6/;
-    license = licenses.mit;
+    license = licenses.gpl3;
   };
 
 }

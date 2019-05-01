@@ -3,13 +3,13 @@
 
 stdenv.mkDerivation rec {
   name = "folly-${version}";
-  version = "2018.10.29.00";
+  version = "2019.04.22.00";
 
   src = fetchFromGitHub {
     owner = "facebook";
     repo = "folly";
     rev = "v${version}";
-    sha256 = "0bbp4w8wbawh3ilgkl7rwvbqkdczpvfn92f9lcvxj8sili0nldab";
+    sha256 = "08aniprv2a96d3k36k668maq9nysxh0cm58i0hvy71cqcmc97h7p";
   };
 
   nativeBuildInputs = [ cmake ];

@@ -8,6 +8,7 @@ let
   pg = config.services.postgresql;
   useMysql = cfg.database.type == "mysql";
   usePostgresql = cfg.database.type == "postgres";
+  useSqlite = cfg.database.type == "sqlite3";
   configFile = pkgs.writeText "app.ini" ''
     APP_NAME = ${cfg.appName}
     RUN_USER = ${cfg.user}
@@ -15,11 +16,15 @@ let
 
     [database]
     DB_TYPE = ${cfg.database.type}
-    HOST = ${if cfg.database.socket != null then cfg.database.socket else cfg.database.host + ":" + toString cfg.database.port}
-    NAME = ${cfg.database.name}
-    USER = ${cfg.database.user}
-    PASSWD = #dbpass#
-    PATH = ${cfg.database.path}
+    ${optionalString (usePostgresql || useMysql) ''
+      HOST = ${if cfg.database.socket != null then cfg.database.socket else cfg.database.host + ":" + toString cfg.database.port}
+      NAME = ${cfg.database.name}
+      USER = ${cfg.database.user}
+      PASSWD = #dbpass#
+    ''}
+    ${optionalString useSqlite ''
+      PATH = ${cfg.database.path}
+    ''}
     ${optionalString usePostgresql ''
       SSL_MODE = disable
     ''}
@@ -45,6 +50,9 @@ let
     [log]
     ROOT_PATH = ${cfg.log.rootPath}
     LEVEL = ${cfg.log.level}
+
+    [service]
+    DISABLE_REGISTRATION = ${boolToString cfg.disableRegistration}
 
     ${cfg.extraConfig}
   '';
@@ -248,6 +256,18 @@ in
         description = "Upper level of template and static files path.";
       };
 
+      disableRegistration = mkEnableOption "the registration lock" // {
+        description = ''
+          By default any user can create an account on this <literal>gitea</literal> instance.
+          This can be disabled by using this option.
+
+          <emphasis>Note:</emphasis> please keep in mind that this should be added after the initial
+          deploy unless <link linkend="opt-services.gitea.useWizard">services.gitea.useWizard</link>
+          is <literal>true</literal> as the first registered user will be the administrator if
+          no install wizard is used.
+        '';
+      };
+
       extraConfig = mkOption {
         type = types.str;
         default = "";
@@ -263,7 +283,7 @@ in
       description = "gitea";
       after = [ "network.target" ] ++ lib.optional usePostgresql "postgresql.service" ++ lib.optional useMysql "mysql.service";
       wantedBy = [ "multi-user.target" ];
-      path = [ gitea.bin ];
+      path = [ gitea.bin pkgs.gitAndTools.git ];
 
       preStart = let
         runConfig = "${cfg.stateDir}/custom/conf/app.ini";
