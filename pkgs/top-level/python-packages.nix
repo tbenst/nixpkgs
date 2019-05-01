@@ -2238,6 +2238,14 @@ in {
 
   curtsies = callPackage ../development/python-modules/curtsies { };
 
+  deeplabcut = callPackage ../development/python-modules/deeplabcut { 
+    opencv3 = toPythonModule (pkgs.opencv3.override {
+      enablePython = true;
+      enableFfmpeg = true;
+      pythonPackages = self;
+    });
+  };
+
   envs = callPackage ../development/python-modules/envs { };
 
   etelemetry = callPackage ../development/python-modules/etelemetry { };
@@ -6735,6 +6743,8 @@ in {
   };
 
   tensorly = callPackage ../development/python-modules/tensorly { };
+
+  tensorpack = callPackage ../development/python-modules/tensorpack { };
 
   tflearn = callPackage ../development/python-modules/tflearn { };
 
