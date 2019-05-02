@@ -2,10 +2,29 @@
 , lib
 , buildPythonPackage
 , fetchFromGitHub
-, pythonPackages
+, configobj
+, gevent
+, greenlet
+, GitPython
+, lxml
+, matplotlib
+, msgpack-python
+, moviepy
+, numpy
+, openpyxl
+, pandas
+, pillow
+, pyglet
+, pyyaml
+, pyopengl
+, pyparallel
+, requests
+, scipy
+, sounddevice
+, tables
+, wxPython4
 }:
 
-with pythonPackages;
 buildPythonPackage rec {
   pname = "psychopy";
   version = "3.0.7";
@@ -19,7 +38,7 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  buildInputs = [
+  propogatedBuildInputs = [
     configobj
     gevent
     greenlet
@@ -40,7 +59,7 @@ buildPythonPackage rec {
     scipy
     sounddevice
     tables
-    wxPython
+    wxPython4
   ];
 
   meta = with lib; {
