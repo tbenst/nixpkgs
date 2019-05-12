@@ -2,7 +2,7 @@
   cudaSupport ? false, cudatoolkit ? null, cudnn ? null,
   fetchFromGitHub, lib, numpy, pyyaml, cffi, typing, cmake, hypothesis, numactl,
   linkFarm, symlinkJoin,
-  utillinux, which }:
+  utillinux, which, magma }:
 
 assert cudnn == null || cudatoolkit != null;
 assert !cudaSupport || cudatoolkit != null;
@@ -12,6 +12,7 @@ let
     name = "${cudatoolkit.name}-unsplit";
     paths = [ cudatoolkit.out cudatoolkit.lib ];
   };
+  my_magma = magma.override {cudatoolkit = cudatoolkit;};
 
   # Normally libcuda.so.1 is provided at runtime by nvidia-x11 via
   # LD_LIBRARY_PATH=/run/opengl-driver/lib.  We only use the stub
@@ -85,7 +86,7 @@ in buildPythonPackage rec {
 
   buildInputs = [
      numpy.blas
-  ] ++ lib.optionals cudaSupport [ cudnn ]
+  ] ++ lib.optionals cudaSupport [ cudnn my_magma ]
     ++ lib.optionals stdenv.isLinux [ numactl ];
 
   propagatedBuildInputs = [

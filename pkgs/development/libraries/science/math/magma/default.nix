@@ -2,13 +2,13 @@
 
 with stdenv.lib;
 
-let version = "2.0.2";
+let version = "2.5.0";
 
 in stdenv.mkDerivation {
   name = "magma-${version}";
   src = fetchurl {
     url = "https://icl.cs.utk.edu/projectsfiles/magma/downloads/magma-${version}.tar.gz";
-    sha256 = "0w3z6k1npfh0d3r8kpw873f1m7lny29sz2bvvfxzk596d4h083lk";
+    sha256 = "0czspk93cv1fy37zyrrc9k306q4yzfxkhy1y4lj937dx8rz5rm2g";
     name = "magma-${version}.tar.gz";
   };
 
@@ -19,7 +19,24 @@ in stdenv.mkDerivation {
 
   enableParallelBuilding=true;
 
-  # MAGMA's default CMake setup does not care about installation. So we copy files directly.
+  # we will not build tests as erroring on compilation
+  buildPhase = ''
+    runHook preBuild
+    # set to empty if unset
+    : ''${makeFlags=}
+    local flagsArray=(
+        ''${enableParallelBuilding:+-j''${NIX_BUILD_CORES} -l''${NIX_BUILD_CORES}}
+        SHELL=''$SHELL
+        ''$makeFlags ''${makeFlagsArray+"''${makeFlagsArray[@]}"}
+        ''$buildFlags ''${buildFlagsArray+"''${buildFlagsArray[@]}"}
+    )
+    echoCmd 'build flags' "''${flagsArray[@]}"
+    make magma "''${flagsArray[@]}"
+    make magma_sparse "''${flagsArray[@]}"
+    unset flagsArray
+    runHook postBuild
+  '';
+# MAGMA's default CMake setup does not care about installation. So we copy files directly.
   installPhase = ''
     mkdir -p $out
     mkdir -p $out/include
