@@ -34,7 +34,7 @@ in buildPythonPackage rec {
     repo   = "pytorch";
     rev    = "v${version}";
     fetchSubmodules = true;
-    sha256 = "1rckv7m3h04mgf7p61rmabszgxh5110ly6qq0qnp28vg7mckvgkh";
+    sha256 = "1rckv7m3h04mgf7p61rmabszgxh5110ly6qq0qnp28vg7mckv000";
   };
 
   /* amsjit = fetchFromGitHub {

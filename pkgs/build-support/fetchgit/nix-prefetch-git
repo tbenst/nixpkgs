@@ -282,14 +282,14 @@ _clone_user_rev() {
         *)
             if test -z "$(echo "$rev" | tr -d 0123456789abcdef)"; then
                 if test -n "$fetchSubmodules"; then
-                    clone --recurse-submodules "$dir" "$url" "$rev" "" 1>&2
+                    clone "--recurse-submodules" "$dir" "$url" "$rev" "" 1>&2
                 else
                     clone "$dir" "$url" "$rev" "" 1>&2
                 fi
             else
                 # if revision is not hexadecimal it might be a tag
                 if test -n "$fetchSubmodules"; then
-                    clone --recurse-submodules "$dir" "$url" "" "refs/tags/$rev" 1>&2
+                    clone "--recurse-submodules" "$dir" "$url" "" "refs/tags/$rev" 1>&2
                 else
                     clone "$dir" "$url" "" "refs/tags/$rev" 1>&2
                 fi
