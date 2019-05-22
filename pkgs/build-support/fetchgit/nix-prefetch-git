@@ -215,9 +215,9 @@ clone(){
     )
 
     # Checkout linked sources.
-    if test -n "$fetchSubmodules"; then
-        init_submodules
-    fi
+    # if test -n "$fetchSubmodules"; then
+    #     init_submodules
+    # fi
 
     if [ -z "$builder" ] && [ -f .topdeps ]; then
         if tg help &>/dev/null; then
@@ -281,10 +281,19 @@ _clone_user_rev() {
             clone "$dir" "$url" "" "$rev" 1>&2;;
         *)
             if test -z "$(echo "$rev" | tr -d 0123456789abcdef)"; then
-                clone "$dir" "$url" "$rev" "" 1>&2
+                if test -n "$fetchSubmodules"; then
+                    clone --recurse-submodules "$dir" "$url" "$rev" "" 1>&2
+                else
+                    clone "$dir" "$url" "$rev" "" 1>&2
+                fi
             else
                 # if revision is not hexadecimal it might be a tag
-                clone "$dir" "$url" "" "refs/tags/$rev" 1>&2
+                if test -n "$fetchSubmodules"; then
+                    clone --recurse-submodules "$dir" "$url" "" "refs/tags/$rev" 1>&2
+                else
+                    clone "$dir" "$url" "" "refs/tags/$rev" 1>&2
+                fi
+
             fi;;
     esac
 

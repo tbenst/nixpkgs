@@ -2680,6 +2680,10 @@ in {
     cudaSupport = pkgs.config.cudaSupport or false;
   };
 
+  pytorch11 = callPackage ../development/python-modules/pytorch/1.1.nix {
+    cudaSupport = pkgs.config.cudaSupport or false;
+  };
+
   pyro-ppl = callPackage ../development/python-modules/pyro-ppl {};
 
   opt-einsum = callPackage ../development/python-modules/opt-einsum {};
