@@ -37,13 +37,13 @@ in buildPythonPackage rec {
     sha256 = "1rckv7m3h04mgf7p61rmabszgxh5110ly6qq0qnp28vg7mckvgkh";
   };
 
-  amsjit = fetchFromGitHub {
+  /* amsjit = fetchFromGitHub {
     owner  = "asmjit";
     repo   = "asmjit";
     rev    = "fc251c914e77cd079e58982cdab00a47539d7fc5";
     fetchSubmodules = true;
     sha256 = "14g99jnq8b3v2kz7s03zbifss760hxdf1dkn9d825jl0fcni5bx8";
-  };
+  }; */
 
   /* patches =
     [ # Skips two tests that are only meant to run on multi GPUs
@@ -93,6 +93,7 @@ in buildPythonPackage rec {
      cmake
      utillinux
      which
+     git
   ] ++ lib.optionals cudaSupport [ cudatoolkit_joined ];
 
   buildInputs = [
