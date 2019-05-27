@@ -170,12 +170,8 @@ checkout_ref(){
     fi
 }
 
-# Update submodules
-init_submodules(){
-    # Add urls into .git/config file
-    git submodule init
 
-    # list submodule directories and their hashes
+update_submodules(){
     git submodule status |
     while read -r l; do
         local hash
@@ -193,6 +189,15 @@ init_submodules(){
 
         clone "$dir" "$url" "$hash" ""
     done
+}
+
+# Update submodules
+init_submodules(){
+    # Add urls into .git/config file
+    git submodule init
+    update_submodules
+    update_submodules
+    # list submodule directories and their hashes
 }
 
 clone(){
@@ -216,6 +221,7 @@ clone(){
 
     # Checkout linked sources.
     if test -n "$fetchSubmodules"; then
+        init_submodules
         init_submodules
     fi
 

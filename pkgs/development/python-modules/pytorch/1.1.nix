@@ -2,7 +2,7 @@
   cudaSupport ? false, cudatoolkit ? null, cudnn ? null,
   fetchFromGitHub, lib, numpy, pyyaml, cffi, typing, cmake, hypothesis, numactl,
   linkFarm, symlinkJoin, ninja, setuptools,
-  utillinux, which, magma, bash }:
+  utillinux, which, magma, bash, git }:
 
 assert cudnn == null || cudatoolkit != null;
 assert !cudaSupport || cudatoolkit != null;
@@ -59,7 +59,6 @@ in buildPythonPackage rec {
     export CC=${cudatoolkit.cc}/bin/gcc CXX=${cudatoolkit.cc}/bin/g++
   '' + lib.optionalString (cudaSupport && cudnn != null) ''
     export CUDNN_INCLUDE_DIR=${cudnn}/include
-    export ASMJIT_SRC_DIR=${amsjit}/src
   '';
 
   preFixup = ''
