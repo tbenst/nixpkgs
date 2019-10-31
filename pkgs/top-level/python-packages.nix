@@ -1651,6 +1651,8 @@ in {
 
   colorlog = callPackage ../development/python-modules/colorlog { };
 
+  colorspacious = callPackage ../development/python-modules/colorspacious { };
+
   colour = callPackage ../development/python-modules/colour {};
 
   configshell = callPackage ../development/python-modules/configshell { };
