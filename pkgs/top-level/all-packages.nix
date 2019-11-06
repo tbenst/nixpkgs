@@ -12816,6 +12816,8 @@ in
 
   live555 = callPackage ../development/libraries/live555 { };
 
+  ljm = callPackage ../development/libraries/ljm { };
+
   loadcaffe = callPackage ../development/libraries/loadcaffe {};
 
   log4cpp = callPackage ../development/libraries/log4cpp { };
