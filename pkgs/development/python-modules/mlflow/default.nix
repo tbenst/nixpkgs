@@ -62,7 +62,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     homepage = "https://github.com/mlflow/mlflow";
-    description = " Open source platform for the machine learning lifecycle";
+    description = "Open source platform for the machine learning lifecycle";
     license = licenses.asl20;
     maintainers = with maintainers; [ tbenst ];
   };
