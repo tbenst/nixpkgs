@@ -15150,6 +15150,8 @@ in
 
   miniHttpd = callPackage ../servers/http/mini-httpd {};
 
+  mlflow = with python3Packages; toPythonApplication mlflow;
+  
   mlmmj = callPackage ../servers/mail/mlmmj { };
 
   moodle = callPackage ../servers/web-apps/moodle { };
