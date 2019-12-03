@@ -1,4 +1,4 @@
-{ stdenv, buildPythonPackage, fetchPypi
+{ stdenv, buildPythonPackage, fetchPypi, writeText, lib
 , alembic
 , click
 , cloudpickle
@@ -21,6 +21,8 @@
 , gorilla
 , gunicorn
 , pytest
+# optional, but included as override does not play nicely with toPythonApplication
+, boto3, mysqlclient 
 }:
 
 buildPythonPackage rec {
@@ -31,10 +33,35 @@ buildPythonPackage rec {
     inherit pname version;
     sha256 = "9116d82be380c32fa465049d14b217c4c200ad11614f4c6674e6b524b2935206";
   };
+  
+  patchPhase = ''
+    substituteInPlace mlflow/utils/process.py --replace \
+      "child = subprocess.Popen(cmd, env=cmd_env, cwd=cwd, universal_newlines=True," \
+      "cmd[0]='$out/bin/gunicornMlflow'; child = subprocess.Popen(cmd, env=cmd_env, cwd=cwd, universal_newlines=True,"
+  '';
+
+  gunicornScript = writeText "gunicornMlflow"
+  ''
+      #!/usr/bin/env python
+      import re
+      import sys
+      from gunicorn.app.wsgiapp import run
+      if __name__ == '__main__':
+        sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', ''', sys.argv[0])
+        sys.exit(run())
+    '';
+
+    postInstall = ''
+      gpath=$out/bin/gunicornMlflow
+      cp ${gunicornScript} $gpath
+      chmod 555 $gpath
+  '';
+
 
   # run into https://stackoverflow.com/questions/51203641/attributeerror-module-alembic-context-has-no-attribute-config
   # also, tests use conda so can't run on NixOS without buildFHSUserEnv
   doCheck = false;
+
 
   propagatedBuildInputs = [
     alembic
@@ -58,6 +85,8 @@ buildPythonPackage rec {
     sqlalchemy
     gorilla
     gunicorn
+    boto3
+    mysqlclient
   ];
 
   meta = with stdenv.lib; {
