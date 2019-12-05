@@ -1,31 +1,7 @@
-{ stdenv, buildPythonPackage, fetchPypi, writeText, lib
-, alembic
-, click
-, cloudpickle
-, requests
-, six
-, flask
-, numpy
-, pandas
-, python-dateutil
-, protobuf
-, GitPython
-, pyyaml
-, querystring_parser
-, simplejson
-, docker
-, databricks-cli
-, entrypoints
-, sqlparse
-, sqlalchemy
-, gorilla
-, gunicorn
-, pytest
-# optional, but included as override does not play nicely with toPythonApplication
-, boto3, mysqlclient 
-}:
+{ stdenv, python3Packages, writeText, lib}:
 
-buildPythonPackage rec {
+with python3Packages;
+python3Packages.buildPythonApplication rec {
   pname = "mlflow";
   version = "1.4.0";
 
@@ -33,8 +9,8 @@ buildPythonPackage rec {
     inherit pname version;
     sha256 = "9116d82be380c32fa465049d14b217c4c200ad11614f4c6674e6b524b2935206";
   };
-  
-  patchPhase = ''
+
+  /* patchPhase = ''
     substituteInPlace mlflow/utils/process.py --replace \
       "child = subprocess.Popen(cmd, env=cmd_env, cwd=cwd, universal_newlines=True," \
       "cmd[0]='$out/bin/gunicornMlflow'; child = subprocess.Popen(cmd, env=cmd_env, cwd=cwd, universal_newlines=True,"
@@ -55,7 +31,7 @@ buildPythonPackage rec {
       gpath=$out/bin/gunicornMlflow
       cp ${gunicornScript} $gpath
       chmod 555 $gpath
-  '';
+  ''; */
 
 
   # run into https://stackoverflow.com/questions/51203641/attributeerror-module-alembic-context-has-no-attribute-config
