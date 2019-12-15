@@ -5523,6 +5523,8 @@ in {
 
   testtools = callPackage ../development/python-modules/testtools { };
 
+  test-tube = callPackage ../development/python-modules/test-tube { };
+
   traitlets = callPackage ../development/python-modules/traitlets { };
 
   transitions = callPackage ../development/python-modules/transitions { };
