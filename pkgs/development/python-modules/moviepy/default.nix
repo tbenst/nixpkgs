@@ -9,6 +9,7 @@
 , proglog
 , requests
 , tqdm
+, setuptools
 # Advanced image processing (triples size of output)
 , advancedProcessing ? false
 , opencv ? null
@@ -38,7 +39,7 @@ buildPythonPackage rec {
   doCheck = false;
 
   propagatedBuildInputs = [
-    numpy decorator imageio imageio-ffmpeg tqdm requests proglog
+    numpy decorator imageio imageio-ffmpeg tqdm requests proglog setuptools
   ] ++ (stdenv.lib.optionals advancedProcessing [
     opencv scikitimage scikitlearn scipy matplotlib youtube-dl
   ]);
