@@ -2669,18 +2669,29 @@ in
   cudnnPackages = callPackages ../development/libraries/science/math/cudnn { };
   inherit (cudnnPackages)
     cudnn_cudatoolkit_7
+    cudnn_cudatoolkit_redist_7
     cudnn_cudatoolkit_7_5
+    cudnn_cudatoolkit_redist_7_5
     cudnn6_cudatoolkit_8
+    cudnn6redist__cudatoolkit_8
     cudnn_cudatoolkit_8
+    cudnn_cudatoolkit_redist_8
     cudnn_cudatoolkit_9
+    cudnn_cudatoolkit_redist_9
     cudnn_cudatoolkit_9_0
+    cudnn_cudatoolkit_redist_9_0
     cudnn_cudatoolkit_9_1
+    cudnn_cudatoolkit_redist_9_1
     cudnn_cudatoolkit_9_2
+    cudnn_cudatoolkit_redist_9_2
     cudnn_cudatoolkit_10
+    cudnn_cudatoolkit_redist_10
     cudnn_cudatoolkit_10_0
-    cudnn_cudatoolkit_10_1;
+    cudnn_cudatoolkit_redist_10_0
+    cudnn_cudatoolkit_10_1
+    cudnn_cudatoolkit_redist_10_1;
 
-  cudnn = cudnn_cudatoolkit_10;
+  cudnn = cudnn_cudatoolkit_redist_10;
 
   curlFull = curl.override {
     idnSupport = true;

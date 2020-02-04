@@ -8,6 +8,7 @@
 , cudatoolkit
 , fetchurl
 , addOpenGLRunpath
+, redistributable ? false
 }:
 
 stdenv.mkDerivation {
@@ -49,10 +50,19 @@ stdenv.mkDerivation {
     majorVersion = lib.versions.major version;
   };
 
+  doDist = redistributable;
+
+  # comply with redistribution licensing
+  distPhase = ''
+      find $out -type f -not -name "*.so*" -delete
+      find $out -type l -not -name "*.so*" -delete
+      find $out -type d -empty -delete
+    '';
+
   meta = with stdenv.lib; {
     description = "NVIDIA CUDA Deep Neural Network library (cuDNN)";
     homepage = "https://developer.nvidia.com/cudnn";
-    license = licenses.unfree;
+    license = if redistributable then licenses.nvidiaCudnn else licenses.unfree;
     platforms = [ "x86_64-linux" ];
     maintainers = with maintainers; [ mdaiter ];
   };
