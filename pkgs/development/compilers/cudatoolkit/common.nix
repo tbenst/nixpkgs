@@ -26,6 +26,7 @@ args@
 , unixODBC
 , xorg
 , zlib
+, redistributable ? false
 }:
 
 stdenv.mkDerivation rec {
@@ -205,6 +206,16 @@ stdenv.mkDerivation rec {
     done
     popd
   '';
+
+  doDist = redistributable;
+
+  # comply with redistribution licensing
+  distPhase = ''
+      find $out -type f -not -name "*.so*" -delete
+      find $out -type l -not -name "*.so*" -delete
+      find $out -type d -empty -delete
+    '';
+
   passthru = {
     cc = gcc;
     majorVersion = lib.versions.majorMinor version;
@@ -214,7 +225,6 @@ stdenv.mkDerivation rec {
     description = "A compiler for NVIDIA GPUs, math libraries, and tools";
     homepage = "https://developer.nvidia.com/cuda-toolkit";
     platforms = [ "x86_64-linux" ];
-    license = licenses.unfree;
+    license = if redistributable then licenses.nvidiaCuda else licenses.unfree;
   };
 }
-

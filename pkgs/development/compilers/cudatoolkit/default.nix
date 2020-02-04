@@ -16,12 +16,21 @@ in rec {
     gcc = gcc48;
   };
 
+  cudatoolkit_redist_6 = cudatoolkit_6.override({
+    redistributable = true;
+  });
+  
   cudatoolkit_6_5 = common {
     version = "6.5.19";
     url = "http://developer.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.19_linux_64.run";
     sha256 = "1x9zdmk8z784d3d35vr2ak1l4h5v4jfjhpxfi9fl9dvjkcavqyaj";
     gcc = gcc48;
   };
+
+  cudatoolkit_redist_6_5 = cudatoolkit_6_5.override({
+    redistributable = true;
+  });
+
 
   cudatoolkit_7 = common {
     version = "7.0.28";
@@ -30,12 +39,20 @@ in rec {
     gcc = gcc6;
   };
 
+  cudatoolkit_redist_7 = cudatoolkit_7.override({
+    redistributable = true;
+  });
+
   cudatoolkit_7_5 = common {
     version = "7.5.18";
     url = "http://developer.download.nvidia.com/compute/cuda/7.5/Prod/local_installers/cuda_7.5.18_linux.run";
     sha256 = "1v2ylzp34ijyhcxyh5p6i0cwawwbbdhni2l5l4qm21s1cx9ish88";
     gcc = gcc6;
   };
+
+  cudatoolkit_redist_7_5 = cudatoolkit_7_5.override({
+    redistributable = true;
+  });
 
   cudatoolkit_8 = common {
     version = "8.0.61.2";
@@ -49,6 +66,10 @@ in rec {
     ];
     gcc = gcc6;
   };
+
+  cudatoolkit_redist_8 = cudatoolkit_8.override({
+    redistributable = true;
+  });
 
   cudatoolkit_9_0 = common {
     version = "9.0.176.1";
@@ -75,6 +96,10 @@ in rec {
     gcc = gcc6;
   };
 
+  cudatoolkit_redist_9_0 = cudatoolkit_9_0.override({
+    redistributable = true;
+  });
+
   cudatoolkit_9_1 = common {
     version = "9.1.85.3";
     url = "https://developer.nvidia.com/compute/cuda/9.1/Prod/local_installers/cuda_9.1.85_387.26_linux";
@@ -96,6 +121,10 @@ in rec {
     gcc = gcc6;
   };
 
+  cudatoolkit_redist_9_1 = cudatoolkit_9_1.override({
+    redistributable = true;
+  });
+
   cudatoolkit_9_2 = common {
     version = "9.2.148.1";
     url = "https://developer.nvidia.com/compute/cuda/9.2/Prod2/local_installers/cuda_9.2.148_396.37_linux";
@@ -109,7 +138,15 @@ in rec {
     gcc = gcc7;
   };
 
+  cudatoolkit_redist_9_2 = cudatoolkit_9_2.override({
+    redistributable = true;
+  });
+
   cudatoolkit_9 = cudatoolkit_9_2;
+
+  cudatoolkit_redist_9 = cudatoolkit_9.override({
+    redistributable = true;
+  });
 
   cudatoolkit_10_0 = common {
     version = "10.0.130";
@@ -119,6 +156,10 @@ in rec {
     gcc = gcc7;
   };
 
+  cudatoolkit_redist_10_0 = cudatoolkit_10_0.override({
+    redistributable = true;
+  });
+
   cudatoolkit_10_1 = common {
     version = "10.1.243";
     url = "https://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run";
@@ -126,6 +167,10 @@ in rec {
 
     gcc = gcc7;
   };
+
+  cudatoolkit_redist_10_1 = cudatoolkit_10_1.override({
+    redistributable = true;
+  });
 
   cudatoolkit_10_2 = common {
     version = "10.2.89";
@@ -135,5 +180,14 @@ in rec {
     gcc = gcc7;
   };
 
+  cudatoolkit_redist_10_2 = cudatoolkit_10_2.override({
+    redistributable = true;
+  });
+
   cudatoolkit_10 = cudatoolkit_10_2;
+
+  cudatoolkit_redist_10 = cudatoolkit_10.override({
+    redistributable = true;
+  });
+
 }

@@ -2638,19 +2638,33 @@ in
   cudaPackages = recurseIntoAttrs (callPackage ../development/compilers/cudatoolkit {});
   inherit (cudaPackages)
     cudatoolkit_6
+    cudatoolkit_6_redist
     cudatoolkit_6_5
+    cudatoolkit_redist_6_5
     cudatoolkit_7
+    cudatoolkit_redist_7
     cudatoolkit_7_5
+    cudatoolkit_redist_7_5
     cudatoolkit_8
+    cudatoolkit_redist_8
     cudatoolkit_9
+    cudatoolkit_redist_9
     cudatoolkit_9_0
+    cudatoolkit_redist_9_0
     cudatoolkit_9_1
+    cudatoolkit_redist_9_1
     cudatoolkit_9_2
+    cudatoolkit_redist_9_2
     cudatoolkit_10
+    cudatoolkit_redist_10
     cudatoolkit_10_0
-    cudatoolkit_10_1;
+    cudatoolkit_redist_10_0
+    cudatoolkit_10_1
+    cudatoolkit_redist_10_1
+    cudatoolkit_10_2
+    cudatoolkit_redist_10_2;
 
-  cudatoolkit = cudatoolkit_10;
+  cudatoolkit = cudatoolkit_redist_10;
 
   cudnnPackages = callPackages ../development/libraries/science/math/cudnn { };
   inherit (cudnnPackages)
