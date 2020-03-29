@@ -7,6 +7,7 @@
 , chardet
 , click
 , easydict
+, ffmpeg
 , h5py
 , imageio
 , imgaug
@@ -65,7 +66,10 @@ buildPythonPackage rec {
     setuptools_scm 
   ];
 
-  /* buildInputs = with pkgs; [ tk tcl]; */
+  buildInputs = [ 
+    ffmpeg # possibly required?
+  ];
+
   propagatedBuildInputs = [
     certifi
     chardet

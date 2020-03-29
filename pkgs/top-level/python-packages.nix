@@ -2240,10 +2240,29 @@ in {
 
   deeplabcut = callPackage ../development/python-modules/deeplabcut { 
     opencv3 = toPythonModule (pkgs.opencv3.override {
+      # enableCuda = true;
       enablePython = true;
       enableFfmpeg = true;
       pythonPackages = self;
     });
+    numpy = self.numpy.override { blas = pkgs.mkl; };
+    # tensorflow = self.tensorflow.override {
+    #   cudaSupport = true;
+    #   cudatoolkit = pkgs.cudatoolkit_10_1;
+    #   cudnn = pkgs.cudnn_cudatoolkit_10_1;
+    #   # https://docs.nvidia.com/deeplearning/frameworks/tensorflow-user-guide/index.html
+    #   cudaCapabilities = [
+    #     # "5.0"
+    #     # "5.2"
+    #     # "6.0"
+    #     # "6.1"
+    #     # "7.0"
+    #     "7.5"
+    #   ];
+    #   sse42Support = true;
+    #   avx2Support = true;
+    #   fmaSupport = true;
+    # };
   };
 
   envs = callPackage ../development/python-modules/envs { };
