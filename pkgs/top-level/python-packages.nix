@@ -2325,6 +2325,8 @@ in {
   }));
 
   impacket = callPackage ../development/python-modules/impacket { };
+  
+  intel-openmp = callPackage ../development/python-modules/intel-openmp { };
 
   jsonlines = callPackage ../development/python-modules/jsonlines { };
 
