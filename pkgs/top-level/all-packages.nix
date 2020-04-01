@@ -14084,6 +14084,8 @@ in
 
   resolv_wrapper = callPackage ../development/libraries/resolv_wrapper { };
 
+  resnet = callPackage ../data/machine-learning/resnet { };
+
   rhino = callPackage ../development/libraries/java/rhino {
     javac = jdk;
     jvm = jre;
