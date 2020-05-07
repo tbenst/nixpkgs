@@ -18,6 +18,7 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     install -Dm444 -t $out/share/doc/zopfli ../README*
+    cp $src/src/zopfli/*.h $out/include/
   '';
 
   enableParallelBuilding = true;
