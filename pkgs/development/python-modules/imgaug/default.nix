@@ -1,9 +1,9 @@
 { buildPythonPackage
-, fetchurl
+, fetchFromGitHub
 , imageio
 , numpy
 , opencv3
-, pytest
+, pytestCheckHook
 , scikitimage
 , scipy
 , shapely
@@ -14,11 +14,13 @@
 
 buildPythonPackage rec {
   pname = "imgaug";
-  version = "0.3.0";
+  version = "0.4.0";
 
-  src = fetchurl {
-    url = "https://github.com/aleju/imgaug/archive/c3d99a420efc45652a1264920dc20378a54b1325.zip";
-    sha256 = "sha256:174nvhyhdn3vz0i34rqmkn26840j3mnfr55cvv5bdf9l4y9bbjq2";
+  src = fetchFromGitHub {
+    owner = "aleju";
+    repo = "imgaug";
+    rev = version;
+    sha256 = "17hbxndxphk3bfnq35y805adrfa6gnm5x7grjxbwdw4kqmbbqzah";
   };
 
   postPatch = ''
@@ -40,11 +42,16 @@ buildPythonPackage rec {
     six
   ];
 
-  checkPhase = ''
-     pytest ./test
-  '';
+  # checkPhase = ''
+  #    pytest
+  # '';
 
-  checkInputs = [ opencv3 pytest ];
+  pytestFlagsArray = [ 
+    # imagecorruptions not currently in nixpkgs
+    "--ignore=test/augmenters/test_imgcorruptlike.py"
+  ];
+
+  checkInputs = [ pytestCheckHook ];
 
   meta = with stdenv.lib; {
     homepage = https://github.com/aleju/imgaug;
