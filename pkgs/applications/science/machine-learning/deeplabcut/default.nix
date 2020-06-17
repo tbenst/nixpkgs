@@ -10,6 +10,7 @@ let
   pythonOverrides = python-self: python-super: {
     # WARNING: openblas does not work
     # https://github.com/AlexEMG/DeepLabCut/issues/637#issuecomment-606893058
+    numpy = python-super.numpy.override { blas = mkl; };
 
     # imgaug test stalls...
     imgaug = python-super.imgaug.overrideAttrs (old:{
