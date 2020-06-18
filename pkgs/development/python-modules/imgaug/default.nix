@@ -1,5 +1,5 @@
 { buildPythonPackage
-, fetchurl
+, fetchFromGitHub
 , imageio
 , numpy
 , opencv3
@@ -9,16 +9,17 @@
 , shapely
 , six
 , stdenv
-, isPy38
 }:
 
 buildPythonPackage rec {
   pname = "imgaug";
-  version = "0.3.0";
+  version = "0.4.0";
 
-  src = fetchurl {
-    url = "https://github.com/aleju/imgaug/archive/c3d99a420efc45652a1264920dc20378a54b1325.zip";
-    sha256 = "sha256:174nvhyhdn3vz0i34rqmkn26840j3mnfr55cvv5bdf9l4y9bbjq2";
+  src = fetchFromGitHub {
+    owner = "aleju";
+    repo = "imgaug";
+    rev = version;
+    sha256 = "17hbxndxphk3bfnq35y805adrfa6gnm5x7grjxbwdw4kqmbbqzah";
   };
 
   postPatch = ''
@@ -52,11 +53,10 @@ buildPythonPackage rec {
   checkInputs = [ pytestCheckHook ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/aleju/imgaug;
+    homepage = "https://github.com/aleju/imgaug";
     description = "Image augmentation for machine learning experiments";
     license = licenses.mit;
     maintainers = with maintainers; [ cmcdragonkai rakesh4g ];
     platforms = platforms.linux;
-    broken = isPy38;
   };
 }
