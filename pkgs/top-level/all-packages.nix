@@ -2311,7 +2311,7 @@ in
 
   psstop = callPackage ../tools/system/psstop { };
 
-  precice = callPackage ../development/libraries/precice { };
+  precice = callPackage ../development/libraries/precice { python3 = python37; };
 
   pueue = callPackage ../applications/misc/pueue { };
 
@@ -11047,7 +11047,7 @@ in
   iconnamingutils = callPackage ../development/tools/misc/icon-naming-utils { };
 
   ikos = callPackage ../development/tools/analysis/ikos {
-    inherit (llvmPackages_7) stdenv clang llvm;
+    inherit (llvmPackages_9) stdenv clang llvm;
   };
 
   include-what-you-use = callPackage ../development/tools/analysis/include-what-you-use {
@@ -14520,6 +14520,7 @@ in
 
   opencascade = callPackage ../development/libraries/opencascade { };
   opencascade-occt = callPackage ../development/libraries/opencascade-occt { };
+  opencascade-occt730 = callPackage ../development/libraries/opencascade-occt/7.3.nix { };
 
   opencl-headers = callPackage ../development/libraries/opencl-headers { };
 
@@ -20609,7 +20610,10 @@ in
 
   freecad = libsForQt514.callPackage ../applications/graphics/freecad {
     mpi = openmpi;
-    # pyside2 5.12 is broken under python 3.8
+  };
+  freecadStable = libsForQt514.callPackage ../applications/graphics/freecad/stable.nix {
+    mpi = openmpi;
+    opencascade-occt = opencascade-occt730;
     python3Packages = python37Packages;
   };
 
@@ -23414,6 +23418,7 @@ in
 
   thonny = callPackage ../applications/editors/thonny { };
 
+  thunderbird = thunderbird-78;
   thunderbird-78 = callPackage ../applications/networking/mailreaders/thunderbird {
     inherit (rustPackages_1_44) cargo rustc;
     libpng = libpng_apng;
@@ -23422,7 +23427,7 @@ in
     gtk3Support = true;
   };
 
-  thunderbird = callPackage ../applications/networking/mailreaders/thunderbird/68.nix {
+  thunderbird-68 = callPackage ../applications/networking/mailreaders/thunderbird/68.nix {
     inherit (rustPackages_1_44) cargo rustc;
     libpng = libpng_apng;
     nss = nss_3_44;
@@ -23431,9 +23436,10 @@ in
 
   thunderbolt = callPackage ../os-specific/linux/thunderbolt {};
 
+  thunderbird-bin = thunderbird-bin-78;
   thunderbird-bin-78 = callPackage ../applications/networking/mailreaders/thunderbird-bin { };
 
-  thunderbird-bin = callPackage ../applications/networking/mailreaders/thunderbird-bin/68.nix { };
+  thunderbird-bin-68 = callPackage ../applications/networking/mailreaders/thunderbird-bin/68.nix { };
 
   ticpp = callPackage ../development/libraries/ticpp { };
 

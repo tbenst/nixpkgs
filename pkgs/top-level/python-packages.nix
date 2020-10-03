@@ -1858,6 +1858,8 @@ in {
 
   entrance-with-router-features = callPackage ../development/python-modules/entrance { routerFeatures = true; };
 
+  entrypoint2 = callPackage ../development/python-modules/entrypoint2 { };
+
   entrypoints = callPackage ../development/python-modules/entrypoints { };
 
   enum34 = callPackage ../development/python-modules/enum34 { };
@@ -3795,6 +3797,8 @@ in {
   msgpack = callPackage ../development/python-modules/msgpack { };
 
   msgpack-numpy = callPackage ../development/python-modules/msgpack-numpy { };
+
+  mss = callPackage ../development/python-modules/mss { };
 
   msrestazure = callPackage ../development/python-modules/msrestazure { };
 
