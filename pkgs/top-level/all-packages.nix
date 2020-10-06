@@ -14900,8 +14900,8 @@ in
       kmime kontactinterface kpimtextedit kpkpass kqtquickcharts ksmtp ktnef
       libgravatar libkcddb libkdcraw libkdegames libkdepim libkexiv2 libkgapi
       libkipi libkleo libkmahjongg libkomparediff2 libksane libksieve mailcommon
-      mailimporter messagelib pim-sieve-editor pimcommon kdegraphics-thumbnailers
-      kio-extras print-manager;
+      mailimporter marble messagelib pim-sieve-editor pimcommon
+      kdegraphics-thumbnailers kio-extras print-manager;
 
     ### LIBRARIES
 
@@ -17364,6 +17364,8 @@ in
   gfxtablet = callPackage ../os-specific/linux/gfxtablet {};
 
   gmailctl = callPackage ../applications/networking/gmailctl {};
+
+  gomplate = callPackage ../development/tools/gomplate {};
 
   gpm = callPackage ../servers/gpm {
     ncurses = null;  # Keep curses disabled for lack of value
@@ -21336,7 +21338,7 @@ in
           kalzium kapptemplate kapman kate katomic
           kblackbox kblocks kbounce
           kcachegrind kcalc kcharselect kcolorchooser
-          kdenlive kdf kdialog kdiamond
+          kdenetwork-filesharing kdenlive kdf kdialog kdiamond
           keditbookmarks
           kfind kfloppy
           kget
@@ -21380,7 +21382,7 @@ in
     kaddressbook kalzium kapptemplate kapman kate katomic
     kblackbox kblocks kbounce
     kcachegrind kcalc kcharselect kcolorchooser
-    kdenlive kdf kdialog kdiamond
+    kdenetwork-filesharing kdenlive kdf kdialog kdiamond
     keditbookmarks
     kfind kfloppy
     kget kgpg
@@ -22824,11 +22826,11 @@ in
     pkgs_ = pkgs.extend(_: prev: {
       pythonInterpreters = prev.pythonInterpreters.override(oldAttrs: {
         pkgs = oldAttrs.pkgs.extend(_: _: {
-          inherit (pkgs) qt5 libsForQt5;
+          inherit (pkgs) qt5 libsForQt514;
         });
       });
     });
-  in pkgs_.libsForQt5.callPackage ../applications/networking/browsers/qutebrowser { };
+  in pkgs_.libsForQt514.callPackage ../applications/networking/browsers/qutebrowser { };
 
   rabbitvcs = callPackage ../applications/version-management/rabbitvcs {};
 
@@ -24688,7 +24690,6 @@ in
   dhewm3 = callPackage ../games/dhewm3 {};
 
   digikam = libsForQt514.callPackage ../applications/graphics/digikam {
-    inherit (plasma5) oxygen;
     opencv3 = opencv3WithoutCuda;
   };
 
