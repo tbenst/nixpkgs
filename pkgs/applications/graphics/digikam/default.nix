@@ -26,7 +26,6 @@
 , exiv2
 , ffmpeg
 , flex
-, jasper ? null, withJpeg2k ? false  # disable JPEG2000 support, jasper has unfixed CVE
 , graphviz
 , imagemagick
 , lcms2
@@ -49,6 +48,7 @@
 , hugin
 , gnumake
 
+, breeze-icons
 , oxygen
 }:
 
@@ -101,11 +101,11 @@ mkDerivation rec {
     kwidgetsaddons
     kxmlgui
 
+    breeze-icons
     marble
     oxygen
     threadweaver
-  ]
-  ++ lib.optionals withJpeg2k [ jasper ];
+  ];
 
   enableParallelBuilding = true;
 
@@ -116,9 +116,12 @@ mkDerivation rec {
     "-DENABLE_QWEBENGINE=on"
   ];
 
+  dontWrapGApps = true;
+
   preFixup = ''
-    gappsWrapperArgs+=(--prefix PATH : ${lib.makeBinPath [ gnumake hugin enblend-enfuse ]})
-    gappsWrapperArgs+=(--suffix DK_PLUGIN_PATH : ${placeholder "out"}/${qtbase.qtPluginPrefix}/${pname})
+    qtWrapperArgs+=("''${gappsWrapperArgs[@]}")
+    qtWrapperArgs+=(--prefix PATH : ${lib.makeBinPath [ gnumake hugin enblend-enfuse ]})
+    qtWrapperArgs+=(--suffix DK_PLUGIN_PATH : ${placeholder "out"}/${qtbase.qtPluginPrefix}/${pname})
     substituteInPlace $out/bin/digitaglinktree \
       --replace "/usr/bin/perl" "${perl}/bin/perl" \
       --replace "/usr/bin/sqlite3" "${sqlite}/bin/sqlite3"
